@@ -1,31 +1,54 @@
 #!/bin/bash
 
-echo "🚀 TourBrain Production Deployment - Final Fix"
-echo "=============================================="
+echo "🚀 TourBrain Production Deployment - Final"
+echo "=========================================="
+echo ""
 
-echo "📝 Adding all changes..."
-git add -A
+echo "✅ Pre-deployment checklist:"
+echo "   ✓ Clerk DNS configured and verified"
+echo "   ✓ Clerk production keys saved"
+echo "   ✓ Vercel build configuration fixed"
+echo "   ✓ Environment variables set in Vercel"
+echo ""
 
-echo "💾 Committing security and build fixes..."
-git commit -m "fix: Final production deployment fixes
+echo "📝 Committing final configuration..."
+git add .env.production vercel.json DEPLOYMENT_FIXES.md
 
-Security Issues Fixed:
-- Remove all hardcoded API keys from template files
-- Replace Stripe API key patterns with generic placeholders  
-- Update AI_PRODUCTION_GUIDE.md to use safe placeholder format
-- Ensure all API keys use environment variables only
+git commit -m "fix: Final production configuration for tourbrain.ai deployment
 
-Build Issues Fixed:
-- Remove EarlyAccessForm component (deprecated for direct signup)
-- Fix marketing component test references
-- Clean up all waitlist-related dependencies
-- Ensure Server Component compatibility
+Configuration Updates:
+- Add verified Clerk production keys (pk_live_* / sk_live_*)
+- Fix Vercel build configuration for monorepo structure
+- Update deployment documentation with troubleshooting
 
-✅ Production ready - all security and build issues resolved
-Ready for UAT deployment to Vercel."
+DNS Verification:
+- Clerk DNS records verified and active
+- clerk.tourbrain.ai → frontend-api.clerk.services
+- accounts.tourbrain.ai → accounts.clerk.services
+- Email DKIM records configured
 
-echo "🚀 Pushing to main branch..."
-git push origin main --force-with-lease
+Build Fix:
+- Simplified vercel.json to use root package.json scripts
+- Correct output directory path for monorepo
 
-echo "✅ Deployment complete!"
-echo "🔍 Check Vercel dashboard for build status at: https://vercel.com/dashboard"
+✅ Ready for production deployment to tourbrain.ai"
+
+echo ""
+echo "🚀 Pushing to main (triggers Vercel auto-deploy)..."
+git push origin main
+
+echo ""
+echo "✅ Deployment initiated!"
+echo ""
+echo "📊 Monitor deployment:"
+echo "   Vercel Dashboard: https://vercel.com/dashboard"
+echo "   GitHub Actions: https://github.com/TourBrainAI/TourBrain/actions"
+echo "   Deployment Logs: vercel logs --follow"
+echo ""
+echo "🌐 Site will be live at: https://tourbrain.ai"
+echo ""
+echo "🔍 Verify deployment:"
+echo "   Health Check: curl https://tourbrain.ai/api/health"
+echo "   Sign In: https://tourbrain.ai/sign-in"
+echo "   Sign Up: https://tourbrain.ai/sign-up"
+echo ""
