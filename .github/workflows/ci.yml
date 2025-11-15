@@ -38,5 +38,5 @@ jobs:
           # Mock environment variables for build
           DATABASE_URL: "postgresql://test:test@localhost:5432/test"
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_mock"
-          CLERK_SECRET_KEY: "sk_test_mock"
+          CLERK_SECRET_KEY: "clerk_secret_mock"
           NEXT_PUBLIC_APP_URL: "http://localhost:3000"

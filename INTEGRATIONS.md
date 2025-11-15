@@ -66,7 +66,7 @@ curl https://yourdomain.com/api/health/database
 
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_[YOUR_KEY]"
-CLERK_SECRET_KEY="sk_live_[YOUR_SECRET]"
+CLERK_SECRET_KEY="clerk_secret_[YOUR_SECRET]"
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
 NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/dashboard"
@@ -180,7 +180,7 @@ REDIS_URL="rediss://:[PASSWORD]@[HOST]:6380"
 
 ```bash
 # Create account at stripe.com
-STRIPE_SECRET_KEY="sk_live_[YOUR_SECRET]"
+STRIPE_SECRET_KEY="stripe_secret_[YOUR_SECRET]"
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_[YOUR_PUBLIC]"
 STRIPE_WEBHOOK_SECRET="whsec_[YOUR_WEBHOOK]"
 ```

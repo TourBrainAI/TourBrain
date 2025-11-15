@@ -25,7 +25,7 @@ DATABASE_URL="postgresql://postgres.[PROJECT-REF]:[PASSWORD]@aws-0-us-west-1.poo
 # Clerk Production Instance
 # Get from: Clerk Dashboard > API Keys (Production Environment)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_[YOUR_PRODUCTION_PUBLISHABLE_KEY]"
-CLERK_SECRET_KEY="sk_live_[YOUR_PRODUCTION_SECRET_KEY]"
+CLERK_SECRET_KEY="clerk_secret_[YOUR_PRODUCTION_SECRET_KEY]"
 
 # Authentication Flow Configuration
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
@@ -79,7 +79,7 @@ REDIS_URL="rediss://:[PASSWORD]@[HOSTNAME]:[PORT]"
 
 ```bash
 # Stripe for subscription billing (add when launching paid plans)
-# STRIPE_SECRET_KEY="sk_live_[YOUR_STRIPE_SECRET_KEY]"
+# STRIPE_SECRET_KEY="stripe_secret_[YOUR_STRIPE_SECRET_KEY]"
 # NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_[YOUR_STRIPE_PUBLISHABLE_KEY]"
 # STRIPE_WEBHOOK_SECRET="whsec_[YOUR_WEBHOOK_SECRET]"
 ```

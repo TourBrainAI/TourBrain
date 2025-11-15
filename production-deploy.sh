@@ -143,7 +143,7 @@ phase_2_environment() {
     echo "1. Go to: https://clerk.com/dashboard"
     echo "2. Create production instance: 'TourBrain Production'"
     echo "3. Configure OAuth providers (Google, GitHub)"
-    echo "4. Copy production API keys (pk_live_... and sk_live_...)"
+    echo "4. Copy production API keys (pk_live_... and clerk_secret_...)"
     echo ""
     
     # AI Services Setup

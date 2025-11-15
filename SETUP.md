@@ -21,7 +21,7 @@ Update `/workspaces/TourBrain/apps/web/.env.local` with your actual keys:
 ```env
 # 🔑 Get Clerk keys from https://dashboard.clerk.com/
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_your-actual-clerk-key"
-CLERK_SECRET_KEY="sk_test_your-actual-clerk-secret"
+CLERK_SECRET_KEY="clerk_secret_your-actual-clerk-secret"
 
 # 🤖 Get OpenAI key from https://platform.openai.com/api-keys
 OPENAI_API_KEY="sk-your-actual-openai-key"

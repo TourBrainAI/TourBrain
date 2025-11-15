@@ -20,7 +20,7 @@ Create `apps/web/.env.local` with your real keys:
 ```bash
 # apps/web/.env.local
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_your_actual_publishable_key
-CLERK_SECRET_KEY=sk_live_your_actual_secret_key
+CLERK_SECRET_KEY=clerk_secret_your_actual_secret_key
 ```
 
 **Important:**

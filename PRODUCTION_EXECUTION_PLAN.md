@@ -90,7 +90,7 @@
    ```bash
    # From Clerk Dashboard > API Keys
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_[PRODUCTION_KEY]"
-   CLERK_SECRET_KEY="sk_live_[PRODUCTION_SECRET]"
+   CLERK_SECRET_KEY="clerk_secret_[PRODUCTION_SECRET]"
    ```
 
 5. **Configure Routing**

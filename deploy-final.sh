@@ -17,7 +17,7 @@ git add .env.production vercel.json DEPLOYMENT_FIXES.md
 git commit -m "fix: Final production configuration for tourbrain.ai deployment
 
 Configuration Updates:
-- Add verified Clerk production keys (pk_live_* / sk_live_*)
+- Add verified Clerk production keys (pk_live_* / clerk_secret_*)
 - Fix Vercel build configuration for monorepo structure
 - Update deployment documentation with troubleshooting
 

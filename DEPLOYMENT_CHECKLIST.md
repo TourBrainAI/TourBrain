@@ -99,7 +99,7 @@
 3. **Copy Production API Keys** (5 minutes)
    ```bash
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_[PRODUCTION_KEY]"
-   CLERK_SECRET_KEY="sk_live_[PRODUCTION_SECRET]"
+   CLERK_SECRET_KEY="clerk_secret_[PRODUCTION_SECRET]"
    ```
 
 **Expected Result:** Enterprise authentication with social login capabilities
@@ -151,7 +151,7 @@
 # Core Services
 DATABASE_URL="postgresql://postgres.[REF]:[PASSWORD]@aws-0-us-west-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_[PRODUCTION_KEY]"
-CLERK_SECRET_KEY="sk_live_[PRODUCTION_SECRET]"
+CLERK_SECRET_KEY="clerk_secret_[PRODUCTION_SECRET]"
 OPENAI_API_KEY="sk-proj-[PRODUCTION_KEY]"
 
 # Authentication Routing

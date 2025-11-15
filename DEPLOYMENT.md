@@ -67,7 +67,7 @@ DATABASE_URL="postgresql://postgres:[PASSWORD]@[HOST]:5432/postgres?sslmode=requ
 
 # Authentication (Clerk Production)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_live_[YOUR_PRODUCTION_KEY]"
-CLERK_SECRET_KEY="sk_live_[YOUR_PRODUCTION_SECRET]"
+CLERK_SECRET_KEY="clerk_secret_[YOUR_PRODUCTION_SECRET]"
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
 NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/dashboard"
@@ -92,7 +92,7 @@ DATABASE_URL="postgresql://tourbrain:tourbrain_dev@localhost:5432/tourbrain"
 
 # Authentication (Clerk Test)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_[YOUR_TEST_KEY]"
-CLERK_SECRET_KEY="sk_test_[YOUR_TEST_SECRET]"
+CLERK_SECRET_KEY="clerk_secret_[YOUR_TEST_SECRET]"
 
 # AI Services (Development)
 OPENAI_API_KEY="sk-proj-[YOUR_DEV_KEY]"

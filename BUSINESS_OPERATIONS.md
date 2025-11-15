@@ -72,7 +72,7 @@ Based on delivered feature completeness and competitive analysis:
 # - Enterprise: $299/month recurring
 
 # Environment variables:
-STRIPE_SECRET_KEY="sk_live_[YOUR_SECRET_KEY]"
+STRIPE_SECRET_KEY="stripe_secret_[YOUR_SECRET_KEY]"
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_[YOUR_PUBLIC_KEY]"
 STRIPE_WEBHOOK_SECRET="whsec_[YOUR_WEBHOOK_SECRET]"
 ```
