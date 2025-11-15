@@ -1,0 +1,499 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  clerkId       String   @unique
+  email         String   @unique
+  firstName     String?
+  lastName      String?
+  imageUrl      String?
+  role          UserRole @default(MEMBER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Organization relationships
+  ownedOrganizations     Organization[] @relation("OrganizationOwner")
+  organizationMemberships OrganizationMember[]
+  
+  @@index([clerkId])
+  @@index([email])
+}
+
+model Organization {
+  id           String            @id @default(cuid())
+  name         String
+  type         OrganizationType
+  description  String?
+  website      String?
+  logoUrl      String?
+  ownerId      String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  
+  // Relationships
+  owner        User              @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  members      OrganizationMember[]
+  
+  // Core business entities
+  venues       Venue[]
+  artists      Artist[]
+  tours        Tour[]
+  activityLogs ActivityLog[]
+  
+  @@index([ownerId])
+  @@index([type])
+}
+
+model OrganizationMember {
+  id             String           @id @default(cuid())
+  userId         String
+  organizationId String
+  role           OrganizationRole
+  joinedAt       DateTime         @default(now())
+  
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+}
+
+model Artist {
+  id             String       @id @default(cuid())
+  organizationId String
+  name           String
+  genre          String?
+  description    String?
+  website        String?
+  spotifyUrl     String?
+  instagramUrl   String?
+  twitterUrl     String?
+  contactName    String?
+  contactEmail   String?
+  contactPhone   String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tours          Tour[]
+  
+  @@index([organizationId])
+  @@index([name])
+}
+
+enum OrganizationType {
+  VENUE
+  PROMOTER
+  AGENCY
+  ARTIST_MANAGEMENT
+  OTHER
+}
+
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Tour {
+  id             String       @id @default(cuid())
+  organizationId String
+  artistId       String
+  name           String
+  description    String?
+  startDate      DateTime
+  endDate        DateTime
+  status         TourStatus   @default(PLANNING)
+  
+  // Deal & financial fields
+  guarantee      Float?
+  splitPercent   Float?
+  currency       String       @default("USD")
+  
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  artist         Artist       @relation(fields: [artistId], references: [id])
+  shows          Show[]
+  merchandise    Merchandise[]
+  routingScenarios RoutingScenario[]
+  activityLogs   ActivityLog[]
+  
+  @@index([organizationId])
+  @@index([artistId])
+  @@index([startDate])
+}
+
+model Show {
+  id           String     @id @default(cuid())
+  tourId       String
+  venueId      String
+  date         DateTime
+  doors        DateTime?
+  showtime     DateTime?
+  status       ShowStatus @default(SCHEDULED)
+  capacity     Int?
+  
+  // Deal fields
+  guarantee    Float?
+  splitPercent Float?
+  ticketPrice  Float?
+  currency     String     @default("USD")
+  
+  // Logistics fields
+  loadInTime   DateTime?
+  soundcheck   DateTime?
+  curfew       DateTime?
+  
+  // Settlement fields
+  grossSales   Float?
+  expenses     Float?
+  netRevenue   Float?
+  settled      Boolean    @default(false)
+  settledAt    DateTime?
+  
+  // Notes and internal info
+  publicNotes  String?    // Notes visible to artists/venues
+  internalNotes String?   // Internal notes for promoter/agency
+  
+  // Weather insight fields
+  weatherScore       Int?       // 1–100 (higher = better conditions)
+  weatherRiskSummary String?    // One-line summary like "High chance of rain / cold"
+  weatherDetailJson  Json?      // Raw stats used to generate score (cache)
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  tour         Tour       @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  venue        Venue      @relation(fields: [venueId], references: [id])
+  tickets      Ticket[]
+  merchandise  Merchandise[]
+  ticketSnapshots TicketSnapshot[]
+  collaborators ShowCollaborator[]
+  activityLogs ActivityLog[]
+  
+  @@index([tourId])
+  @@index([venueId])
+  @@index([date])
+  @@index([status])
+}
+
+model Venue {
+  id             String       @id @default(cuid())
+  organizationId String
+  name           String
+  address        String
+  city           String
+  state          String?
+  country        String
+  postalCode     String?
+  capacity       Int?
+  latitude       Float?
+  longitude      Float?
+  
+  // Contact information
+  contactName    String?
+  contactEmail   String?
+  contactPhone   String?
+  website        String?
+  
+  // Venue specifications
+  loadInTime     String?
+  soundcheck     String?
+  curfew         String?
+  notes          String?
+  
+  // Weather intelligence fields
+  isOutdoor      Boolean      @default(false)
+  weatherNotes   String?      // Manual notes like "covered stage", "rain backup"
+  timezone       String?      // For accurate weather timing
+  
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  shows          Show[]
+  climateProfiles VenueClimateProfile[]
+  routingStops   RoutingScenarioStop[]
+  
+  @@index([organizationId])
+  @@index([city, country])
+  @@index([name])
+}
+
+model Ticket {
+  id          String   @id @default(cuid())
+  showId      String
+  tier        String
+  price       Float
+  quantity    Int
+  sold        Int      @default(0)
+  status      TicketStatus @default(ON_SALE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  show        Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
+  sales       TicketSale[]
+  
+  @@index([showId])
+  @@index([status])
+}
+
+model TicketSale {
+  id          String   @id @default(cuid())
+  ticketId    String
+  quantity    Int
+  totalPrice  Float
+  soldAt      DateTime @default(now())
+  
+  ticket      Ticket   @relation(fields: [ticketId], references: [id])
+  
+  @@index([ticketId])
+  @@index([soldAt])
+}
+
+model Merchandise {
+  id          String   @id @default(cuid())
+  tourId      String?
+  showId      String?
+  name        String
+  description String?
+  category    MerchCategory
+  price       Float
+  cost        Float?
+  inventory   Int
+  sold        Int      @default(0)
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  tour        Tour?    @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  show        Show?    @relation(fields: [showId], references: [id], onDelete: Cascade)
+  sales       MerchandiseSale[]
+  
+  @@index([tourId])
+  @@index([showId])
+  @@index([category])
+}
+
+model MerchandiseSale {
+  id              String       @id @default(cuid())
+  merchandiseId   String
+  showId          String?
+  quantity        Int
+  unitPrice       Float
+  totalPrice      Float
+  soldAt          DateTime     @default(now())
+  
+  merchandise     Merchandise  @relation(fields: [merchandiseId], references: [id])
+  
+  @@index([merchandiseId])
+  @@index([showId])
+  @@index([soldAt])
+}
+
+model TicketSnapshot {
+  id              String   @id @default(cuid())
+  showId          String
+  capturedAt      DateTime @default(now())
+  
+  // Aggregated ticket data
+  ticketsSold     Int
+  ticketsAvailable Int
+  grossSales      Float
+  
+  // Optional tier breakdown (JSON for flexibility)
+  tierBreakdown   Json?    // { "GA": { "sold": 1500, "available": 500, "gross": 75000 }, ... }
+  
+  // Calculated fields
+  sellThroughPct  Float    // Percentage sold (calculated)
+  daysUntilShow   Int      // Days from snapshot to show date
+  
+  // Metadata
+  source          String   @default("MANUAL") // MANUAL, CSV_UPLOAD, API
+  uploadedBy      String?  // User ID who created this snapshot
+  
+  show            Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
+  
+  @@index([showId])
+  @@index([capturedAt])
+  @@index([daysUntilShow])
+}
+
+enum TourStatus {
+  PLANNING
+  ANNOUNCED
+  ON_SALE
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ShowStatus {
+  INQUIRY
+  OFFER
+  CONFIRMED
+  SCHEDULED
+  ON_SALE
+  SOLD_OUT
+  COMPLETED
+  CANCELLED
+  POSTPONED
+  SETTLED
+}
+
+enum TicketStatus {
+  ON_SALE
+  SOLD_OUT
+  PAUSED
+}
+
+enum MerchCategory {
+  APPAREL
+  ACCESSORIES
+  POSTERS
+  VINYL
+  CD
+  DIGITAL
+  OTHER
+}
+
+enum RoutingStatus {
+  DRAFT
+  APPLIED
+  ARCHIVED
+}
+
+model VenueClimateProfile {
+  id              String   @id @default(uuid())
+  venueId         String
+  month           Int      // 1–12
+  
+  // Climate stats (long-term averages)
+  avgHighTempC    Float?
+  avgLowTempC     Float?
+  avgPrecipDays   Float?   // Avg days of measurable precipitation in month
+  avgWindSpeed    Float?
+  avgHumidity     Float?
+  
+  // Risk percentages
+  hotDaysPct      Float?   // % of days > 30C / 86F
+  coldDaysPct     Float?   // % of days < 5C / 41F
+  
+  // Metadata
+  source          String?  // Name of weather provider
+  lastUpdated     DateTime @default(now())
+  
+  venue           Venue    @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  
+  @@unique([venueId, month])
+  @@index([venueId])
+  @@index([month])
+}
+
+
+
+model RoutingScenario {
+  id          String   @id @default(cuid())
+  tourId      String
+  name        String   // "East Coast Run - Jan 2025"
+  status      RoutingStatus @default(DRAFT)
+  constraints Json     // Region, dates, drive time limits, off-days
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relationships
+  tour        Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  stops       RoutingScenarioStop[]
+  
+  @@index([tourId])
+}
+
+model RoutingScenarioStop {
+  id         String  @id @default(cuid())
+  scenarioId String
+  venueId    String
+  date       DateTime
+  sequence   Int
+  driveTime  Int?    // minutes from previous stop
+  notes      String?
+  
+  // Relationships
+  scenario   RoutingScenario @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  venue      Venue           @relation(fields: [venueId], references: [id])
+  
+  @@unique([scenarioId, sequence])
+  @@index([scenarioId])
+  @@index([venueId])
+}
+
+model ShowCollaborator {
+  id             String              @id @default(cuid())
+  showId         String
+  email          String              // Email of external collaborator
+  name           String?             // Optional name
+  permission     CollaboratorPermission
+  token          String              @unique // For shareable links
+  invitedBy      String              // User ID who created the invitation
+  invitedAt      DateTime            @default(now())
+  lastAccessedAt DateTime?
+  expiresAt      DateTime?           // Optional expiration
+  
+  show           Show                @relation(fields: [showId], references: [id], onDelete: Cascade)
+  
+  @@unique([showId, email])
+  @@index([showId])
+  @@index([token])
+  @@index([email])
+}
+
+model ActivityLog {
+  id             String   @id @default(cuid())
+  organizationId String
+  showId         String?
+  tourId         String?
+  userId         String?  // Internal user (can be null for external collaborators)
+  email          String?  // External collaborator email (can be null for internal users)
+  
+  action         String   // "created", "updated", "shared", "exported", etc.
+  entityType     String   // "show", "tour", "venue", etc.
+  entityId       String   // ID of the affected entity
+  
+  changes        Json?    // What fields were changed (for updates)
+  metadata       Json?    // Additional context (IP, user agent, etc.)
+  
+  createdAt      DateTime @default(now())
+  
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  show           Show?        @relation(fields: [showId], references: [id], onDelete: Cascade)
+  tour           Tour?        @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  
+  @@index([organizationId])
+  @@index([showId])
+  @@index([tourId])
+  @@index([createdAt])
+  @@index([action])
+}
+
+enum CollaboratorPermission {
+  VIEW_ONLY
+  EDIT_LOGISTICS
+  EDIT_FINANCIALS
+}
