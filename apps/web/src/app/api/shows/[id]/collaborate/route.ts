@@ -57,9 +57,9 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { organizationId, userId } = await getCurrentUser();
+    const { user, organizationId } = await getCurrentUser();
 
-    if (!organizationId || !userId) {
+    if (!organizationId || !user?.id) {
       return NextResponse.json(
         { error: "Authentication required" },
         { status: 403 }
@@ -136,7 +136,7 @@ export async function POST(
         name,
         permission,
         token,
-        invitedBy: userId,
+        invitedBy: user.id,
         expiresAt,
       },
     });
@@ -146,7 +146,7 @@ export async function POST(
       organizationId,
       showId: params.id,
       tourId: show.tourId,
-      userId,
+      userId: user.id,
       action: "invited_collaborator",
       entityType: "show",
       entityId: params.id,
@@ -228,7 +228,7 @@ export async function DELETE(
     await logActivity({
       organizationId,
       showId: params.id,
-      userId,
+      userId: user.id,
       action: "removed_collaborator",
       entityType: "show",
       entityId: params.id,
