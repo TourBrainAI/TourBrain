@@ -101,7 +101,7 @@ export async function POST(
         daysUntilShow: daysUntilShow,
         source: "MANUAL",
         uploadedBy: userId,
-        tierBreakdown: notes ? { notes } : null,
+        tierBreakdown: notes ? { notes } : undefined,
       },
     });
 
