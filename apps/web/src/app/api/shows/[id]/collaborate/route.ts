@@ -180,9 +180,9 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { organizationId, userId } = await getCurrentUser();
+    const { user, organizationId } = await getCurrentUser();
 
-    if (!organizationId || !userId) {
+    if (!organizationId || !user?.id) {
       return NextResponse.json(
         { error: "Authentication required" },
         { status: 403 }
