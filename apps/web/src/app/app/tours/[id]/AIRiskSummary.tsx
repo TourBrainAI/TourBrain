@@ -52,8 +52,8 @@ export function AIRiskSummary({ tourId }: AIRiskSummaryProps) {
         </div>
         <div className="p-6 text-center text-gray-500">
           <p>
-            Click "Generate Analysis" to get AI-powered insights on tour risk
-            factors and opportunities.
+            Click &quot;Generate Analysis&quot; to get AI-powered insights on
+            tour risk factors and opportunities.
           </p>
         </div>
       </div>

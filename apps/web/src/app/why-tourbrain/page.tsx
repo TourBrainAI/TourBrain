@@ -91,8 +91,8 @@ export default function WhyTourBrainPage() {
               The result? <strong>Late insights</strong>,
               <strong> duplicated data entry</strong>, and
               <strong> missed opportunities</strong>. By the time you realize a
-              show isn't pacing well or a route doesn't make sense, it's too
-              late to fix.
+              show isn&apos;t pacing well or a route doesn&apos;t make sense,
+              it&apos;s too late to fix.
             </p>
           </div>
 

@@ -17,7 +17,7 @@ export default function PromotersSolutionPage() {
       <section className="py-16 bg-neutral-900/30">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">
-            When you're managing 20+ shows across multiple markets.
+            When you&apos;re managing 20+ shows across multiple markets.
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
@@ -33,7 +33,7 @@ export default function PromotersSolutionPage() {
                 Financial Blindness
               </h3>
               <p className="text-sm text-neutral-300">
-                No real-time view of tour P&L across markets.
+                No real-time view of tour P&amp;L across markets.
               </p>
             </div>
 

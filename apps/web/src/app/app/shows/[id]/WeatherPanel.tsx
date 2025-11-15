@@ -237,7 +237,7 @@ export function WeatherPanel({ show }: WeatherPanelProps) {
       ) : (
         <p className="text-xs text-neutral-500">
           Climate stats not available yet. Once this venue has latitude,
-          longitude, and climate data populated, you'll see patterns here.
+          longitude, and climate data populated, you&apos;ll see patterns here.
         </p>
       )}
 

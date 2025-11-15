@@ -212,7 +212,8 @@ export default function FAQPage() {
         <div className="mx-auto max-w-2xl px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Still have questions?</h2>
           <p className="text-lg text-neutral-300 mb-8">
-            We're here to help. Reach out to our team for personalized answers.
+            We&apos;re here to help. Reach out to our team for personalized
+            answers.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

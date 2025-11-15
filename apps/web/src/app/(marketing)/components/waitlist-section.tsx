@@ -61,8 +61,8 @@ export function WaitlistSection() {
               Welcome to the TourBrain roster!
             </h2>
             <p className="text-neutral-300">
-              We'll be in touch soon about your early access. In the meantime,
-              feel free to reach out to{" "}
+              We&apos;ll be in touch soon about your early access. In the
+              meantime, feel free to reach out to{" "}
               <a
                 href="mailto:hello@tourbrain.ai"
                 className="text-blue-400 hover:text-blue-300"
@@ -85,10 +85,10 @@ export function WaitlistSection() {
             Join the TourBrain early access roster.
           </h2>
           <p className="text-xl text-neutral-300 mb-8">
-            We're onboarding a small group of venues, promoters, and agencies
-            who want to run tours on a modern tour OS. If you're actively
-            routing shows or managing tours, we'd love to explore a pilot with
-            you.
+            We&apos;re onboarding a small group of venues, promoters, and
+            agencies who want to run tours on a modern tour OS. If you&apos;re
+            actively routing shows or managing tours, we&apos;d love to explore
+            a pilot with you.
           </p>
 
           <div className="space-y-3 text-neutral-200 mb-8">

@@ -19,21 +19,21 @@ export default function AgenciesSolutionPage() {
       <section className="py-16 bg-neutral-900/30">
         <div className="mx-auto max-w-4xl px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">
-            When you're juggling tours for 10+ artists.
+            When you&apos;re juggling tours for 10+ artists.
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
             <div className="p-6 rounded-lg border border-red-600/30 bg-red-600/5">
               <h3 className="font-bold text-red-400 mb-3">Tour Chaos</h3>
               <p className="text-sm text-neutral-300">
-                Each artist's tour in different systems and spreadsheets.
+                Each artist&apos;s tour in different systems and spreadsheets.
               </p>
             </div>
 
             <div className="p-6 rounded-lg border border-red-600/30 bg-red-600/5">
               <h3 className="font-bold text-red-400 mb-3">Client Blindness</h3>
               <p className="text-sm text-neutral-300">
-                Artists can't see their own tour status in real-time.
+                Artists can&apos;t see their own tour status in real-time.
               </p>
             </div>
 
