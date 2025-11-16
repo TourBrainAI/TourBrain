@@ -14,11 +14,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { organizationId, userId } = await getCurrentUser();
+    const { user, organizationId } = await getCurrentUser();
     const { searchParams } = new URL(request.url);
     const format = searchParams.get("format");
 
-    if (!organizationId || !userId) {
+    if (!organizationId || !user) {
       return NextResponse.json(
         { error: "Authentication required" },
         { status: 403 }
@@ -50,10 +50,10 @@ export async function GET(
 
     switch (format) {
       case "pdf":
-        return await handlePDFExport(show, userId, organizationId);
+        return await handlePDFExport(show, user.id, organizationId);
 
       case "ical":
-        return await handleICalExport(show, userId, organizationId);
+        return await handleICalExport(show, user.id, organizationId);
 
       default:
         return NextResponse.json(
